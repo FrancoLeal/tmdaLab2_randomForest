@@ -1,7 +1,7 @@
 require('randomForest')
 require('MASS')
-path = "~/TMDA/tmdaLab2_randomForest/breast-cancer-wisconsin.data"
-#path = "~/Escritorio/USACH/Topicos/Taller de mineria de datos avanzada/tmdaLab1/breast-cancer-wisconsin.data"
+#path = "~/TMDA/tmdaLab2_randomForest/breast-cancer-wisconsin.data"
+path = "~/Escritorio/USACH/Topicos/Taller de mineria de datos avanzada/tmdaLab2_randomForest/breast-cancer-wisconsin.data"
 data =  read.table(path,sep=",", na.strings = c("?"))
 
 names = c('ID','clump','size',
@@ -36,7 +36,7 @@ varImpPlot(data.rf)
 
 data.mds = cmdscale(1-data.rf$proximity,eig=TRUE)
 op = par(pty="s")
-pairs(cbind(iris[,1:4], iris.mds$points), cex=0.6, 
+pairs(cbind(data.2, data.mds$points), cex=0.6, 
       gap=0,
       col=c("red", "green")[as.numeric(data.2$Class)],
       main="BCW Data: Predictors and MDS of Proximity Based on RandomForest")
@@ -45,7 +45,7 @@ pairs(cbind(iris[,1:4], iris.mds$points), cex=0.6,
 plot(data.rf)
 legend("bottomright", colnames(data.rf$err.rate),col=1:4,cex=0.8,fill=1:4)
 
-parcoord(data.2[,1:9],var.label = TRUE,col=c("red", "green")[as.numeric(data.2$Class)])
+parcoord(data.2[,1:9],var.label = TRUE,col=c("green", "red")[as.numeric(data.2$Class)])
 legend("bottomright",legend = c("Benigno", "Maligno"),fill=2:3)
 
 

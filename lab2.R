@@ -46,27 +46,48 @@ plot(data.rf)
 legend("bottomright", colnames(data.rf$err.rate),col=1:4,cex=0.8,fill=1:4)
 
 parcoord(data.2[,1:9],var.label = TRUE,col=c("green", "red")[as.numeric(data.2$Class)])
-legend("bottomright",legend = c("Benigno", "Maligno"),fill=2:3)
+legend("bottomright",legend = c("Maligno", "Benigno"),fill=2:3)
 
 
+#este da menos error que con todas
+data.3 = subset(data.2 , select = -mitoses)
+data.rf.2 = randomForest(Class ~ ., data = data.3, ntree= 600,importance=TRUE, proximity = TRUE)
+print(data.rf.2)
+round(importance(data.rf.2),2)
+varImpPlot(data.rf.2)
 
-#data.3 = subset(data.2 , select = -mitoses)
-#data.rf.2 = randomForest(Class ~ ., data = data.3, ntree= 600,importance=TRUE, proximity = TRUE)
-#print(data.rf.2)
-#round(importance(data.rf.2),2)
-#varImpPlot(data.rf.2)
+data.4 = subset(data.2 , select = -shape)
+data.rf.3 = randomForest(Class ~ ., data = data.4, ntree= 600,importance=TRUE, proximity = TRUE)
+print(data.rf.3)
+round(importance(data.rf.3),2)
+varImpPlot(data.rf.3)
 
+data.5 = subset(data.3 , select = -shape)
+data.rf.4 = randomForest(Class ~ ., data = data.5, ntree= 600,importance=TRUE, proximity = TRUE)
+print(data.rf.4)
+round(importance(data.rf.4),2)
+varImpPlot(data.rf.4)
 
-#data.4 = subset(data.3,select=-adhesion)
-#data.rf.3 = randomForest(Class ~ ., data = data.4, ntree= 600,importance=TRUE, proximity = TRUE)
-#print(data.rf.3)
-#round(importance(data.rf.3),2)
-#varImpPlot(data.rf.3)
-#regularizacion:  parsimonia (BIC)
-#generalizacion (datos nuevos)
-
-
-
+# #este da el mismo error que el original
+# data.4 = subset(data.3,select=-adhesion)
+# data.rf.3 = randomForest(Class ~ ., data = data.4, ntree= 600,importance=TRUE, proximity = TRUE)
+# print(data.rf.3)
+# round(importance(data.rf.3),2)
+# varImpPlot(data.rf.3)
+# # regularizacion:  parsimonia (BIC)
+# # generalizacion (datos nuevos)
+# 
+# data.5 = subset(data.4,select=-epithelial)
+# data.rf.4 = randomForest(Class ~ ., data = data.5, ntree= 600,importance=TRUE, proximity = TRUE)
+# print(data.rf.4)
+# round(importance(data.rf.4),2)
+# varImpPlot(data.rf.4)
+# 
+# data.6 = subset(data.5,select=-nucleoli)
+# data.rf.5 = randomForest(Class ~ ., data = data.5, ntree= 600,importance=TRUE, proximity = TRUE)
+# print(data.rf.5)
+# round(importance(data.rf.5),2)
+# varImpPlot(data.rf.5)
 #si ACP no es suficiente, usamos proximidad
 
 #jugar con el nro de arboles y variables
